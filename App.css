@@ -1,0 +1,76 @@
+/* Estilo do contêiner do jogo */
+.game-container {
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  margin-bottom: 20px;
+  color: #2d2d2d;
+}
+
+/* Estilo da grade do jogo */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(20, 20px); /* 20 colunas de 20px */
+  grid-template-rows: repeat(20, 20px);    /* 20 linhas de 20px */
+  gap: 2px;
+  justify-content: center;
+  margin: 20px auto;
+}
+
+/* Estilo das células */
+.cell {
+  width: 20px;
+  height: 20px;
+  background-color: #eee;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+/* Estilo da cobra */
+.snake {
+  background-color: #33cc33; /* Verde escuro */
+  border-radius: 50%; /* Forma arredondada */
+  transition: transform 0.2s ease-out;
+}
+
+/* Estilo da cabeça da cobra */
+.snake-head {
+  background-color: #228b22; /* Verde mais escuro para a cabeça */
+  border-radius: 50%;
+  transform: scale(1.2); /* Um pouco maior para a cabeça */
+}
+
+/* Estilo da comida (maçã) */
+.food {
+  background-color: #ff4d4d; /* Vermelho para a maçã */
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  box-shadow: 0 0 5px 2px rgba(255, 0, 0, 0.5); /* Um efeito de brilho suave */
+}
+
+/* Estilo de Game Over */
+.game-over {
+  font-size: 24px;
+  color: red;
+  font-weight: bold;
+}
+
+/* Estilo do botão de reiniciar */
+.restart-button {
+  padding: 10px 20px;
+  margin-top: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #ff6347;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.restart-button:hover {
+  background-color: #ff4500;
+}
