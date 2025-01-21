@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 
-const gridSize = 20; 
+const gridSize = 12; 
 const initialSnake = [{ x: 5, y: 5 }];
-const initialFood = { x: 10, y: 10 };
+const initialFood = { x: 6, y: 3 }; 
 
 const App = () => {
   const [snake, setSnake] = useState(initialSnake);
   const [food, setFood] = useState(initialFood);
-  const [direction, setDirection] = useState('RIGHT');
+  const [direction, setDirection] = useState('');
   const [gameOver, setGameOver] = useState(false);
+  const [score, setScore] = useState(0);
+  const [started, setStarted] = useState(false);
 
   const generateFoodPosition = () => {
     let newFoodPosition;
@@ -23,7 +25,7 @@ const App = () => {
   };
 
   const moveSnake = useCallback(() => {
-    if (gameOver) return;
+    if (gameOver || !started) return;
 
     const head = { ...snake[0] };
 
@@ -59,15 +61,20 @@ const App = () => {
 
     if (head.x === food.x && head.y === food.y) {
       setFood(generateFoodPosition());
+      setScore(score + 1);
     } else {
       newSnake.pop();
     }
 
     setSnake(newSnake);
-  }, [snake, direction, food, gameOver]);
+  }, [snake, direction, food, gameOver, score, started]);
 
   const handleKeyPress = (event) => {
     if (gameOver) return;
+
+    if (!started) {
+      setStarted(true);
+    }
 
     switch (event.key) {
       case 'ArrowUp':
@@ -90,8 +97,7 @@ const App = () => {
   useEffect(() => {
     if (gameOver) return;
 
-    const interval = setInterval(moveSnake, 100);
-
+    const interval = setInterval(moveSnake, 200); 
     return () => clearInterval(interval);
   }, [moveSnake, gameOver]);
 
@@ -120,13 +126,16 @@ const App = () => {
   const restartGame = () => {
     setSnake(initialSnake);
     setFood(generateFoodPosition()); 
-    setDirection('RIGHT');
+    setDirection('');
     setGameOver(false);
+    setScore(0);
+    setStarted(false);
   };
 
   return (
     <div className="game-container">
       <h1>Jogo da Cobrinha</h1>
+      <div className="score">Pontuação: {score}</div>
       {gameOver && (
         <div>
           <div className="game-over">Fim de Jogo!</div>
