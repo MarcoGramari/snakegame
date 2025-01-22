@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 
-const gridSize = 12; 
-const initialSnake = [{ x: 5, y: 5 }];
-const initialFood = { x: 6, y: 3 }; 
+let gridSize = 12; 
+let initialSnake = [{ x: 5, y: 5 }];
+let initialFood = { x: 6, y: 3 }; 
 
-const App = () => {
-  const [snake, setSnake] = useState(initialSnake);
-  const [food, setFood] = useState(initialFood);
-  const [direction, setDirection] = useState('');
-  const [gameOver, setGameOver] = useState(false);
-  const [score, setScore] = useState(0);
-  const [started, setStarted] = useState(false);
+let App = () => {
+  let [snake, setSnake] = useState(initialSnake);
+  let [food, setFood] = useState(initialFood);
+  let [direction, setDirection] = useState('');
+  let [gameOver, setGameOver] = useState(false);
+  let [score, setScore] = useState(0);
+  let [started, setStarted] = useState(false);
 
-  const generateFoodPosition = () => {
+  let generateFoodPosition = () => {
     let newFoodPosition;
     do {
       newFoodPosition = {
@@ -24,10 +24,10 @@ const App = () => {
     return newFoodPosition;
   };
 
-  const moveSnake = useCallback(() => {
+  let moveSnake = useCallback(() => {
     if (gameOver || !started) return;
 
-    const head = { ...snake[0] };
+    let head = { ...snake[0] };
 
     switch (direction) {
       case 'UP':
@@ -57,7 +57,7 @@ const App = () => {
       return;
     }
 
-    const newSnake = [head, ...snake];
+    let newSnake = [head, ...snake];
 
     if (head.x === food.x && head.y === food.y) {
       setFood(generateFoodPosition());
@@ -69,7 +69,7 @@ const App = () => {
     setSnake(newSnake);
   }, [snake, direction, food, gameOver, score, started]);
 
-  const handleKeyPress = (event) => {
+  let handleKeyPress = (event) => {
     if (gameOver) return;
 
     if (!started) {
@@ -97,7 +97,7 @@ const App = () => {
   useEffect(() => {
     if (gameOver) return;
 
-    const interval = setInterval(moveSnake, 200); 
+    let interval = setInterval(moveSnake, 200); 
     return () => clearInterval(interval);
   }, [moveSnake, gameOver]);
 
@@ -106,12 +106,12 @@ const App = () => {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [handleKeyPress]);
 
-  const renderGrid = () => {
+  let renderGrid = () => {
     let cells = [];
     for (let row = 0; row < gridSize; row++) {
       for (let col = 0; col < gridSize; col++) {
-        const isSnake = snake.some(segment => segment.x === col && segment.y === row);
-        const isFood = food.x === col && food.y === row;
+        let isSnake = snake.some(segment => segment.x === col && segment.y === row);
+        let isFood = food.x === col && food.y === row;
         cells.push(
           <div
             key={`${row}-${col}`}
@@ -123,7 +123,7 @@ const App = () => {
     return cells;
   };
 
-  const restartGame = () => {
+  let restartGame = () => {
     setSnake(initialSnake);
     setFood(generateFoodPosition()); 
     setDirection('');
